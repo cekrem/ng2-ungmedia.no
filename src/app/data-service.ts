@@ -7,12 +7,14 @@ export class DataService {
 
         constructor() {
                 this.loaded = { bool: false };
-                
+
                 var firebaseUrl: string = 'https://ungmedia.firebaseio.com/content/';
                 var ref = new Firebase(firebaseUrl);
 
                 ref.on('value',
-                        (snapshot) => { this.data = snapshot.val(); this.loaded.bool = true; },
+                        (snapshot) => { 
+                                this.data = snapshot.val(); this.loaded.bool = true; console.log('Data loaded!');
+                        },
                         (error) => console.error(error)
                 );
         }

@@ -1,7 +1,7 @@
-import {Component, NgIf} from 'angular2/angular2';
-import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import { Component, NgIf } from 'angular2/angular2';
+import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
 import { DataService } from './data-service';
-import {MainComponent} from './main';
+import { MainComponent } from './main';
 import { ContentComponent } from './content';
 
 @Component({
@@ -16,7 +16,7 @@ import { ContentComponent } from './content';
 export class AppComponent {
   public loaded: any;
   
-  constructor(DataService:DataService){
+  constructor(DataService: DataService){
     this.loaded = DataService.loaded;
   }
 }

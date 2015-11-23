@@ -17,7 +17,11 @@ var DataService = (function () {
         this.loaded = { bool: false };
         var firebaseUrl = 'https://ungmedia.firebaseio.com/content/';
         var ref = new Firebase(firebaseUrl);
-        ref.on('value', function (snapshot) { _this.data = snapshot.val(); _this.loaded.bool = true; }, function (error) { return console.error(error); });
+        ref.on('value', function (snapshot) {
+            _this.data = snapshot.val();
+            _this.loaded.bool = true;
+            console.log('Data loaded!');
+        }, function (error) { return console.error(error); });
     }
     DataService = __decorate([
         angular2_1.Injectable(), 

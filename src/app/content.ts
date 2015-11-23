@@ -8,8 +8,8 @@ import { DataService } from './data-service';
 })
 
 export class ContentComponent {
-    public content:string;
-    public remoteHtml:any = 'placeholder';
+    public content: string;
+    public remoteHtml: any = 'placeholder';
     
     constructor(params: RouteParams, DataService: DataService) {
         this.content = params.get('content');
