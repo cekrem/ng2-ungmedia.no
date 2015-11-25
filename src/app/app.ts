@@ -13,6 +13,7 @@ import { PageComponent } from './page';
   { path: '/', as: 'Main', component: MainComponent },
   { path: '/page:page', as: 'Page', component: PageComponent }
 ])
+
 export class AppComponent {
   public loaded: any;
   
