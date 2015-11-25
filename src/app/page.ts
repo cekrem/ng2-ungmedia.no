@@ -4,16 +4,16 @@ import { DataService } from './data-service';
 
 @Component({
     selector: 'Content',
-    templateUrl: './app/content.html'
+    templateUrl: './app/page.html'
 })
 
-export class ContentComponent {
-    public content: string;
-    public remoteHtml: any = 'placeholder';
+export class PageComponent {
+    public page: string;
+    public content;
     
     constructor(params: RouteParams, DataService: DataService) {
-        this.content = params.get('content');
+        this.page = params.get('page');
         
-        this.remoteHtml = DataService.data[this.content];
+        this.content = DataService.data;
     }
 }

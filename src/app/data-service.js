@@ -10,22 +10,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var angular2_1 = require('angular2/angular2');
+var http_1 = require('angular2/http');
 var DataService = (function () {
-    function DataService() {
+    function DataService(http) {
         var _this = this;
-        this.data = {};
         this.loaded = { bool: false };
-        var firebaseUrl = 'https://ungmedia.firebaseio.com/content/';
-        var ref = new Firebase(firebaseUrl);
-        ref.on('value', function (snapshot) {
-            _this.data = snapshot.val();
+        this.data = {};
+        var url = 'https://ungmedia.firebaseio.com/content/';
+        http.get(url + '.json')
+            .map(function (res) { return res.json(); })
+            .subscribe(function (data) {
             _this.loaded.bool = true;
-            console.log('Data loaded!');
-        }, function (error) { return console.error(error); });
+            _this.data = data;
+            console.log('Data loaded via http!');
+        });
     }
     DataService = __decorate([
         angular2_1.Injectable(), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [http_1.Http])
     ], DataService);
     return DataService;
 })();

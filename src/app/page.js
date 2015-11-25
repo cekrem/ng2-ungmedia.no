@@ -12,25 +12,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var angular2_1 = require('angular2/angular2');
 var router_1 = require('angular2/router');
 var data_service_1 = require('./data-service');
-var main_1 = require('./main');
-var page_1 = require('./page');
-var AppComponent = (function () {
-    function AppComponent(DataService) {
-        this.loaded = DataService.loaded;
+var PageComponent = (function () {
+    function PageComponent(params, DataService) {
+        this.page = params.get('page');
+        this.content = DataService.data;
     }
-    AppComponent = __decorate([
+    PageComponent = __decorate([
         angular2_1.Component({
-            selector: 'um-app',
-            template: '<router-outlet *ng-if="loaded.bool"></router-outlet><p *ng-if="!loaded.bool">Laster data...</p>',
-            directives: [router_1.ROUTER_DIRECTIVES, angular2_1.NgIf]
-        }),
-        router_1.RouteConfig([
-            { path: '/', as: 'Main', component: main_1.MainComponent },
-            { path: '/page:page', as: 'Page', component: page_1.PageComponent }
-        ]), 
-        __metadata('design:paramtypes', [data_service_1.DataService])
-    ], AppComponent);
-    return AppComponent;
+            selector: 'Content',
+            templateUrl: './app/page.html'
+        }), 
+        __metadata('design:paramtypes', [router_1.RouteParams, data_service_1.DataService])
+    ], PageComponent);
+    return PageComponent;
 })();
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.js.map
+exports.PageComponent = PageComponent;
+//# sourceMappingURL=page.js.map
