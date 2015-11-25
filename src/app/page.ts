@@ -10,10 +10,14 @@ import { DataService } from './data-service';
 export class PageComponent {
     public page: string;
     public content;
+    public put: Function;
+    public putArrow: Function;
     
     constructor(params: RouteParams, DataService: DataService) {
         this.page = params.get('page');
         
         this.content = DataService.data;
+        this.put = DataService.put;
+        this.putArrow = DataService.putArrow;
     }
 }

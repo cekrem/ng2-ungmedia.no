@@ -14,10 +14,12 @@ var http_1 = require('angular2/http');
 var DataService = (function () {
     function DataService(http) {
         var _this = this;
+        this.http = http;
+        this.put = this.put.bind(this);
         this.loaded = { bool: false };
         this.data = {};
-        var url = 'https://ungmedia.firebaseio.com/content/';
-        http.get(url + '.json')
+        this.url = 'https://ungmedia.firebaseio.com/content/';
+        this.http.get(this.url + '.json')
             .map(function (res) { return res.json(); })
             .subscribe(function (data) {
             _this.loaded.bool = true;
@@ -25,6 +27,10 @@ var DataService = (function () {
             console.log('Data loaded via http!');
         });
     }
+    DataService.prototype.put = function (page, data) {
+        this.http.put(this.url + page + '.json', JSON.stringify(data))
+            .subscribe(function () { return console.log('Data put successfully!'); });
+    };
     DataService = __decorate([
         angular2_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

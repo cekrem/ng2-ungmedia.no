@@ -6,17 +6,28 @@ export class DataService {
         public data: any;
         public loaded: any;
 
+        private http: Http;
+        private url: string;
+
         constructor(http: Http) {
+                this.http = http;
+                this.put = this.put.bind(this);
+
                 this.loaded = { bool: false };
                 this.data = {};
-                var url: string = 'https://ungmedia.firebaseio.com/content/';
+                this.url = 'https://ungmedia.firebaseio.com/content/';
 
-                http.get(url +'.json')
-                .map(res => res.json())
-                .subscribe(data => {
-                        this.loaded.bool = true;
-                        this.data = data;
-                        console.log('Data loaded via http!');
-                });
+                this.http.get(this.url + '.json')
+                        .map(res => res.json())
+                        .subscribe(data => {
+                                this.loaded.bool = true;
+                                this.data = data;
+                                console.log('Data loaded via http!');
+                        });
+        }
+
+        put(page: string, data: string) {
+                this.http.put(this.url + page + '.json', JSON.stringify(data))
+                        .subscribe(() => console.log('Data put successfully!'));
         }
 }
