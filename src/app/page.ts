@@ -11,11 +11,13 @@ export class PageComponent {
     public page: string;
     public content;
     public put: Function;
+    public reset: Function;
     
     constructor(params: RouteParams, DataService: DataService) {
         this.page = params.get('page');
         
         this.content = DataService.data;
         this.put = DataService.put;
+        this.reset = DataService.reset;
     }
 }

@@ -16,13 +16,14 @@ var main_1 = require('./main');
 var page_1 = require('./page');
 var AppComponent = (function () {
     function AppComponent(DataService) {
+        this.password = '';
         this.loaded = DataService.loaded;
     }
     AppComponent = __decorate([
         angular2_1.Component({
             selector: 'um-app',
-            template: '<router-outlet *ng-if="loaded.bool"></router-outlet><p *ng-if="!loaded.bool">Laster data...</p>',
-            directives: [router_1.ROUTER_DIRECTIVES, angular2_1.NgIf]
+            templateUrl: './app/app.html',
+            directives: [router_1.ROUTER_DIRECTIVES, angular2_1.NgIf, angular2_1.FORM_DIRECTIVES]
         }),
         router_1.RouteConfig([
             { path: '/', as: 'Main', component: main_1.MainComponent },

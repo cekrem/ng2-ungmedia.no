@@ -1,0 +1,4 @@
+<input type="password" [(ng-model)]="password">
+
+<router-outlet *ng-if="loaded.bool && (password === '29seksere')"></router-outlet>
+<p *ng-if="!loaded.bool">Laster data...</p>

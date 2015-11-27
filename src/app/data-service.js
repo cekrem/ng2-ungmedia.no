@@ -16,9 +16,11 @@ var DataService = (function () {
         var _this = this;
         this.http = http;
         this.put = this.put.bind(this);
+        this.reset = this.reset.bind(this);
         this.loaded = { bool: false };
         this.data = {};
         this.url = 'https://ungmedia.firebaseio.com/content/';
+        this.backupUrl = 'https://ungmedia.firebaseio.com/backup/';
         this.http.get(this.url + '.json')
             .map(function (res) { return res.json(); })
             .subscribe(function (data) {
@@ -29,7 +31,18 @@ var DataService = (function () {
     }
     DataService.prototype.put = function (page, data) {
         this.http.put(this.url + page + '.json', JSON.stringify(data))
-            .subscribe(function () { return console.log('Data put successfully!'); });
+            .subscribe(function () { return alert('Nytt innhold lagret!'); });
+    };
+    DataService.prototype.reset = function () {
+        var _this = this;
+        this.http.get(this.backupUrl + '.json')
+            .map(function (res) { return res.json(); })
+            .subscribe(function (data) {
+            console.log('Backup loaded successfully');
+            _this.backup = data;
+            _this.http.put(_this.url + '.json', JSON.stringify(_this.backup))
+                .subscribe(function () { return alert('Innhold tilbakestilt til forrige backup!'); });
+        });
     };
     DataService = __decorate([
         angular2_1.Injectable(), 
