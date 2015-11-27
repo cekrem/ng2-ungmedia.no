@@ -17,14 +17,14 @@ var page_1 = require('./page');
 var AppComponent = (function () {
     function AppComponent(DataService) {
         this.loaded = DataService.loaded;
-        var passphrase = 'MjlzZWtzZXJl';
-        this.checkPassword = function (password) {
-            if (btoa(password) == passphrase) {
-                console.log(true);
-                return true;
-            }
-        };
     }
+    AppComponent.prototype.checkPassword = function (password) {
+        var passphrase = 'MjlzZWtzZXJl';
+        if (btoa(password) == passphrase) {
+            console.log(true);
+            return true;
+        }
+    };
     AppComponent = __decorate([
         angular2_1.Component({
             selector: 'um-app',
