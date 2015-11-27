@@ -13,8 +13,6 @@ export class DataService {
 
         constructor(http: Http) {
                 this.http = http;
-                this.put = this.put.bind(this);
-                this.reset = this.reset.bind(this);
 
                 this.loaded = { bool: false };
                 this.data = {};

@@ -16,8 +16,8 @@ var PageComponent = (function () {
     function PageComponent(params, DataService) {
         this.page = params.get('page');
         this.content = DataService.data;
-        this.put = DataService.put;
-        this.reset = DataService.reset;
+        this.put = function (page, data) { return DataService.put(page, data); };
+        this.reset = function () { return DataService.reset(); };
     }
     PageComponent = __decorate([
         angular2_1.Component({

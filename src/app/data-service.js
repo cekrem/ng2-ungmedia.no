@@ -15,8 +15,6 @@ var DataService = (function () {
     function DataService(http) {
         var _this = this;
         this.http = http;
-        this.put = this.put.bind(this);
-        this.reset = this.reset.bind(this);
         this.loaded = { bool: false };
         this.data = {};
         this.url = 'https://ungmedia.firebaseio.com/content/';

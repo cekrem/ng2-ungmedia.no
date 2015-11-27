@@ -17,7 +17,7 @@ export class PageComponent {
         this.page = params.get('page');
         
         this.content = DataService.data;
-        this.put = DataService.put;
-        this.reset = DataService.reset;
+        this.put = (page: string, data: string) => DataService.put(page, data);
+        this.reset = () => DataService.reset();
     }
 }
