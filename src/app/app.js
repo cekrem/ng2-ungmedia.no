@@ -29,7 +29,7 @@ var AppComponent = (function () {
         angular2_1.Component({
             selector: 'um-app',
             templateUrl: './app/app.html',
-            directives: [router_1.ROUTER_DIRECTIVES, angular2_1.NgIf, angular2_1.FORM_DIRECTIVES]
+            directives: [router_1.ROUTER_DIRECTIVES, angular2_1.NgIf]
         }),
         router_1.RouteConfig([
             { path: '/', as: 'Main', component: main_1.MainComponent },
