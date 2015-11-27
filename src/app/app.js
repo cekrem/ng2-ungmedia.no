@@ -16,8 +16,14 @@ var main_1 = require('./main');
 var page_1 = require('./page');
 var AppComponent = (function () {
     function AppComponent(DataService) {
-        this.password = '';
         this.loaded = DataService.loaded;
+        var passphrase = 'MjlzZWtzZXJl';
+        this.checkPassword = function (password) {
+            if (btoa(password) == passphrase) {
+                console.log(true);
+                return true;
+            }
+        };
     }
     AppComponent = __decorate([
         angular2_1.Component({

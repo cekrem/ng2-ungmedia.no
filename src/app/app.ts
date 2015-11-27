@@ -16,10 +16,17 @@ import { PageComponent } from './page';
 
 export class AppComponent {
   public loaded: any;
-  public password: string;
+  public checkPassword: Function;
 
   constructor(DataService: DataService) {
-    this.password = '';
     this.loaded = DataService.loaded;
+    var passphrase = 'MjlzZWtzZXJl';
+
+    this.checkPassword = (password) => {
+      if (btoa(password) == passphrase) {
+        console.log(true);
+        return true;
+      }
+    }
   }
 }
