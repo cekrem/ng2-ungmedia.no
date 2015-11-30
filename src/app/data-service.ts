@@ -1,5 +1,5 @@
 import { Injectable } from 'angular2/angular2';
-import { Http } from 'angular2/http';
+import { Http, Response } from 'angular2/http';
 
 @Injectable()
 export class DataService {
@@ -20,7 +20,7 @@ export class DataService {
                 this.backupUrl = 'https://ungmedia.firebaseio.com/backup/';
 
                 this.http.get(this.url + '.json')
-                        .map(res => res.json())
+                        .map((res: Response) => res.json())
                         .subscribe(data => {
                                 this.loaded.bool = true;
                                 this.data = data;
@@ -35,7 +35,7 @@ export class DataService {
         
         reset() {
                 this.http.get(this.backupUrl + '.json')
-                        .map(res => res.json())
+                        .map((res: Response) => res.json())
                         .subscribe(data => {
                                 console.log('Backup loaded successfully');
                                 this.backup = data;
