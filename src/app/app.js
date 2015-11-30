@@ -17,6 +17,20 @@ var page_1 = require('./page');
 var AppComponent = (function () {
     function AppComponent(DataService) {
         this.loaded = DataService.loaded;
+        var myObservable = angular2_1.Observable.create(function (observer) {
+            observer.next(0);
+            setTimeout(function () { return observer.next(1); }, 1000);
+            setTimeout(function () { return observer.next(2); }, 2000);
+            setTimeout(function () { return observer.next(3); }, 3000);
+            setTimeout(function () { return observer.next(4); }, 4000);
+            setTimeout(function () { return observer.next(5); }, 5000);
+            setTimeout(function () { return observer.next(6); }, 6000);
+            setTimeout(function () { return observer.next(7); }, 7000);
+            setTimeout(function () { return observer.next(8); }, 8000);
+            setTimeout(function () { return observer.next(9); }, 9000);
+            setTimeout(function () { return observer.next(10); }, 10000);
+        });
+        myObservable.subscribe(function (data) { return console.log(data); });
     }
     AppComponent.prototype.checkPassword = function (password) {
         var passphrase = 'MjlzZWtzZXJl';
