@@ -1,4 +1,4 @@
-import { Component, NgIf, Observable} from 'angular2/angular2';
+import { Component, NgIf, Observable } from 'angular2/angular2';
 import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
 import { DataService } from './data-service';
 import { MainComponent } from './main';
