@@ -22,7 +22,7 @@ export class AppComponent {
   }
   
   checkPassword(password) {
-    var passphrase = 'MjlzZWtzZXJl';
+    let passphrase = 'MjlzZWtzZXJl';
     
     if(btoa(password) == passphrase) {
       console.log(true);
