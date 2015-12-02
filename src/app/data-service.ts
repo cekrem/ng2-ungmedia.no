@@ -1,4 +1,6 @@
-import { Injectable } from 'angular2/angular2';
+declare var Firebase: any;
+
+import { Injectable, Observable } from 'angular2/angular2';
 import { Http, Response } from 'angular2/http';
 
 @Injectable()
@@ -19,13 +21,26 @@ export class DataService {
                 this.url = 'https://ungmedia.firebaseio.com/content/';
                 this.backupUrl = 'https://ungmedia.firebaseio.com/backup/';
 
-                this.http.get(this.url + '.json')
+/*                this.http.get(this.url + '.json')
                         .map((res: Response) => res.json())
                         .subscribe(data => {
                                 this.loaded.bool = true;
                                 this.data = data;
-                                console.log('Data loaded via http!');
+                                console.log('Data loaded via http!', new Date());
+                        });*/
+                        
+                const ref = new Firebase(this.url);
+                
+                let contentStream = Observable.create(function (observer) {
+                        ref.on('value', snapshot => observer.next(snapshot.val()));
+                });
+                
+                contentStream
+                        .subscribe(data => {
+                                this.loaded.bool = true;
+                                this.data = data;
                         });
+                
         }
 
         put(page: string, data: string) {

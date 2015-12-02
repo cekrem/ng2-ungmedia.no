@@ -20,7 +20,7 @@ export class AppComponent {
 
   constructor(DataService: DataService) {
     this.loaded = DataService.loaded;
-    
+/*    
     let myObservable = Observable.create((observer) => {
       observer.next(0);
       setTimeout(()=> observer.next(1), 1000);
@@ -35,11 +35,11 @@ export class AppComponent {
       setTimeout(()=> observer.next(10), 10000);
     });
     
-    myObservable.subscribe((data) => console.log(data));
+    myObservable.subscribe((data) => console.log(data));*/
   }
   
   checkPassword(password) {
-    let passphrase = 'MjlzZWtzZXJl';
+    const passphrase = 'MjlzZWtzZXJl';
     
     if(btoa(password) == passphrase) {
       console.log(true);
