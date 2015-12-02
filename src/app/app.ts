@@ -1,4 +1,4 @@
-import { Component, NgIf, Observable } from 'angular2/angular2';
+import { Component, EventEmitter, NgIf, Observable } from 'angular2/angular2';
 import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
 import { DataService } from './data-service';
 import { MainComponent } from './main';
@@ -17,25 +17,30 @@ import { PageComponent } from './page';
 
 export class AppComponent {
   public loaded: any;
+  /*public data: any;*/
 
   constructor(DataService: DataService) {
     this.loaded = DataService.loaded;
-/*    
-    let myObservable = Observable.create((observer) => {
-      observer.next(0);
-      setTimeout(()=> observer.next(1), 1000);
-      setTimeout(()=> observer.next(2), 2000);
-      setTimeout(()=> observer.next(3), 3000);
-      setTimeout(()=> observer.next(4), 4000);
-      setTimeout(()=> observer.next(5), 5000);
-      setTimeout(()=> observer.next(6), 6000);
-      setTimeout(()=> observer.next(7), 7000);
-      setTimeout(()=> observer.next(8), 8000);
-      setTimeout(()=> observer.next(9), 9000);
-      setTimeout(()=> observer.next(10), 10000);
-    });
-    
-    myObservable.subscribe((data) => console.log(data));*/
+	/*this.data = 0;
+	
+	let tempArray = [];
+	
+	let myEmitter = new EventEmitter(true);
+	myEmitter.subscribe(data => {
+		tempArray.push(data);
+		this.data = JSON.parse(JSON.stringify(tempArray));
+	});
+
+	setTimeout(() => myEmitter.next(1), 1000);
+	setTimeout(() => myEmitter.next(2), 2000);
+	setTimeout(() => myEmitter.next(3), 3000);
+	setTimeout(() => myEmitter.next(4), 4000);
+	setTimeout(() => myEmitter.next(5), 5000);
+	setTimeout(() => myEmitter.next(6), 6000);
+	setTimeout(() => myEmitter.next(7), 7000);
+	setTimeout(() => myEmitter.next(8), 8000);
+	setTimeout(() => myEmitter.next(9), 9000);
+	setTimeout(() => myEmitter.next(10), 10000);*/
   }
   
   checkPassword(password) {

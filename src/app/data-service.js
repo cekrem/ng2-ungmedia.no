@@ -1,22 +1,24 @@
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
 };
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var angular2_1 = require('angular2/angular2');
-var http_1 = require('angular2/http');
 var DataService = (function () {
-    function DataService(http) {
+    function DataService() {
         var _this = this;
-        this.http = http;
+        var url = 'https://ungmedia.firebaseio.com/content/';
+        var backupUrl = 'https://ungmedia.firebaseio.com/backup/';
         this.loaded = { bool: false };
         this.data = {};
-        this.url = 'https://ungmedia.firebaseio.com/content/';
-        this.backupUrl = 'https://ungmedia.firebaseio.com/backup/';
+        this.ref = new Firebase(url);
+        this.backupRef = new Firebase(backupUrl);
         /*                this.http.get(this.url + '.json')
                                 .map((res: Response) => res.json())
                                 .subscribe(data => {
@@ -24,34 +26,25 @@ var DataService = (function () {
                                         this.data = data;
                                         console.log('Data loaded via http!', new Date());
                                 });*/
-        var ref = new Firebase(this.url);
-        var contentStream = angular2_1.Observable.create(function (observer) {
-            ref.on('value', function (snapshot) { return observer.next(snapshot.val()); });
-        });
+        var contentStream = new angular2_1.EventEmitter();
         contentStream
-            .subscribe(function (data) {
+            .subscribe(function (res) {
+            console.log(res.type + ' loaded!');
             _this.loaded.bool = true;
-            _this.data = data;
+            _this[res.type] = res.content;
         });
+        this.ref.on('value', function (snapshot) { return contentStream.next({ content: snapshot.val(), type: 'data' }); });
+        this.backupRef.on('value', function (snapshot) { return contentStream.next({ content: snapshot.val(), type: 'backup' }); });
     }
     DataService.prototype.put = function (page, data) {
-        this.http.put(this.url + page + '.json', JSON.stringify(data))
-            .subscribe(function () { return alert('Nytt innhold lagret!'); });
+        this.ref.child(page).set(data, function () { return alert('Nytt innhold lagret!'); });
     };
     DataService.prototype.reset = function () {
-        var _this = this;
-        this.http.get(this.backupUrl + '.json')
-            .map(function (res) { return res.json(); })
-            .subscribe(function (data) {
-            console.log('Backup loaded successfully');
-            _this.backup = data;
-            _this.http.put(_this.url + '.json', JSON.stringify(_this.backup))
-                .subscribe(function () { return alert('Innhold tilbakestilt til forrige backup!'); });
-        });
+        this.ref.set(this.backup, function () { return alert('Innhold tilbakestilt til forrige backup!'); });
     };
     DataService = __decorate([
         angular2_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [])
     ], DataService);
     return DataService;
 })();

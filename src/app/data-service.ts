@@ -1,62 +1,52 @@
 declare var Firebase: any;
 
-import { Injectable, Observable } from 'angular2/angular2';
-import { Http, Response } from 'angular2/http';
+import { Injectable, EventEmitter } from 'angular2/angular2';
 
 @Injectable()
 export class DataService {
-        public data: any;
-        public loaded: any;
+	public data: any;
+	private backup: any;
+	public loaded: any;
 
-        private http: Http;
-        private url: string;
-        private backupUrl: string;
-        private backup: any;
+	private ref: any;
+	private backupRef: any;
 
-        constructor(http: Http) {
-                this.http = http;
+	constructor() {
+		const url = 'https://ungmedia.firebaseio.com/content/';
+		const backupUrl = 'https://ungmedia.firebaseio.com/backup/';
 
-                this.loaded = { bool: false };
-                this.data = {};
-                this.url = 'https://ungmedia.firebaseio.com/content/';
-                this.backupUrl = 'https://ungmedia.firebaseio.com/backup/';
+		this.loaded = { bool: false };
+		this.data = {};
+		
+		this.ref = new Firebase(url);
+		this.backupRef = new Firebase(backupUrl);
+		
 
-/*                this.http.get(this.url + '.json')
-                        .map((res: Response) => res.json())
-                        .subscribe(data => {
-                                this.loaded.bool = true;
-                                this.data = data;
-                                console.log('Data loaded via http!', new Date());
-                        });*/
-                        
-                const ref = new Firebase(this.url);
-                
-                let contentStream = Observable.create(function (observer) {
-                        ref.on('value', snapshot => observer.next(snapshot.val()));
-                });
-                
-                contentStream
-                        .subscribe(data => {
-                                this.loaded.bool = true;
-                                this.data = data;
-                        });
-                
-        }
+		/*                this.http.get(this.url + '.json')
+								.map((res: Response) => res.json())
+								.subscribe(data => {
+										this.loaded.bool = true;
+										this.data = data;
+										console.log('Data loaded via http!', new Date());
+								});*/
 
-        put(page: string, data: string) {
-                this.http.put(this.url + page + '.json', JSON.stringify(data))
-                        .subscribe(() => alert('Nytt innhold lagret!'));
-        }
-        
-        reset() {
-                this.http.get(this.backupUrl + '.json')
-                        .map((res: Response) => res.json())
-                        .subscribe(data => {
-                                console.log('Backup loaded successfully');
-                                this.backup = data;
-                                
-                                this.http.put(this.url + '.json', JSON.stringify(this.backup))
-                                        .subscribe(() => alert('Innhold tilbakestilt til forrige backup!'));
-                        })
-        }
+		let contentStream = new EventEmitter();
+		contentStream
+			.subscribe(res => {
+				console.log(res.type + ' loaded!');
+				this.loaded.bool = true;
+				this[res.type] = res.content;
+			});
+		
+		this.ref.on('value', snapshot => contentStream.next({ content: snapshot.val(), type: 'data'}));
+		this.backupRef.on('value', snapshot => contentStream.next({ content: snapshot.val(), type: 'backup'}));
+	}
+
+	put(page: string, data: string) {
+		this.ref.child(page).set(data, () => alert('Nytt innhold lagret!'));
+	}
+
+	reset() {
+		this.ref.set(this.backup, () => alert('Innhold tilbakestilt til forrige backup!'));
+	}
 }
