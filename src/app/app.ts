@@ -16,12 +16,29 @@ import { PageComponent } from './page';
 ])
 
 export class AppComponent {
-  constructor() { }
+  private input: string[];
+  public inputPassphrase: string;
   
-  checkPassword(password) {
-    const passphrase = 'MjlzZWtzZXJl';
+  constructor() {
+    this.input = [];
+   }
+  
+  catchInput(event) {    
+    let char = String.fromCharCode(event.keyCode);
+    this.input.push(char);
     
-    if(btoa(password) == passphrase) {
+    if(this.input.length > 8) {
+      let string = this.input.join('');
+      let password = string.substr(-9);
+      
+      this.inputPassphrase = btoa(password);
+    }
+  }
+  
+  checkPassword(inputPassphrase) {
+    const passphrase = 'MjlTRUtTRVJF';
+    
+    if(inputPassphrase == passphrase) {
       console.log(true);
       return true
     }

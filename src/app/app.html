@@ -1,2 +1,4 @@
-<input type="password" #input (keyup.enter)="checkPassword(input.value)">
-<router-outlet *ng-if="checkPassword(input.value)"></router-outlet>
+<div (keyup)="catchInput($event)">
+	<input style="width:0; height:0; opacity:0" autofocus type="password" #input (keyup.enter)="checkPassword(input.value)">
+	<router-outlet *ng-if="checkPassword(inputPassphrase)"></router-outlet>
+</div>

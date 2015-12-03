@@ -13,10 +13,20 @@ var main_1 = require('./main');
 var page_1 = require('./page');
 var AppComponent = (function () {
     function AppComponent() {
+        this.input = [];
     }
-    AppComponent.prototype.checkPassword = function (password) {
-        var passphrase = 'MjlzZWtzZXJl';
-        if (btoa(password) == passphrase) {
+    AppComponent.prototype.catchInput = function (event) {
+        var char = String.fromCharCode(event.keyCode);
+        this.input.push(char);
+        if (this.input.length > 8) {
+            var string = this.input.join('');
+            var password = string.substr(-9);
+            this.inputPassphrase = btoa(password);
+        }
+    };
+    AppComponent.prototype.checkPassword = function (inputPassphrase) {
+        var passphrase = 'MjlTRUtTRVJF';
+        if (inputPassphrase == passphrase) {
             console.log(true);
             return true;
         }
