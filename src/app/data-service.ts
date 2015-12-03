@@ -4,42 +4,33 @@ import { Injectable, EventEmitter } from 'angular2/angular2';
 
 @Injectable()
 export class DataService {
-	public data: any;
 	private backup: any;
-	public loaded: any;
 
 	private ref: any;
 	private backupRef: any;
+	
+	public contentStream: EventEmitter<any>;
 
 	constructor() {
+		console.log('DataService init!');
+		
 		const url = 'https://ungmedia.firebaseio.com/content/';
 		const backupUrl = 'https://ungmedia.firebaseio.com/backup/';
-
-		this.loaded = { bool: false };
-		this.data = {};
 		
 		this.ref = new Firebase(url);
 		this.backupRef = new Firebase(backupUrl);
 		
+		this.contentStream = new EventEmitter();
 
-		/*                this.http.get(this.url + '.json')
-								.map((res: Response) => res.json())
-								.subscribe(data => {
-										this.loaded.bool = true;
-										this.data = data;
-										console.log('Data loaded via http!', new Date());
-								});*/
-
-		let contentStream = new EventEmitter();
-		contentStream
+		this.contentStream
+			.filter(res => res.type == 'backup')
 			.subscribe(res => {
-				console.log(res.type + ' loaded!');
-				this.loaded.bool = true;
-				this[res.type] = res.content;
+				console.log('backup loaded!');
+				this.backup = res.content;
 			});
 		
-		this.ref.on('value', snapshot => contentStream.next({ content: snapshot.val(), type: 'data'}));
-		this.backupRef.on('value', snapshot => contentStream.next({ content: snapshot.val(), type: 'backup'}));
+		this.ref.on('value', snapshot => this.contentStream.next({ content: snapshot.val(), type: 'data'}));
+		this.backupRef.on('value', snapshot => this.contentStream.next({ content: snapshot.val(), type: 'backup'}));
 	}
 
 	put(page: string, data: string) {

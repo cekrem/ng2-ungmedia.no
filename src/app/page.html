@@ -1,7 +1,13 @@
 <h1>{{page}}</h1>
 
-<textarea #data [value]="content[page]" (keyup)="content[page] = data.value"></textarea>
-<button (click)="put(page, data.value)">Lagre endringer</button>
-<button (click)="reset()">Gå tilbake til backup!</button>
+<div *ng-if="content">
+	<textarea #data [value]="content[page]" (keyup)="content[page] = data.value"></textarea>
+	<button (click)="put(page, data.value)">Lagre endringer</button>
+	<button (click)="reset()">Gå tilbake til backup!</button>
+	
+	<p [inner-html]="content[page]"></p>	
+</div>
 
-<p [inner-html]="content[page]"></p>
+<div *ng-if="!content">
+	Laster innhold...
+</div>

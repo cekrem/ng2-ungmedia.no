@@ -1,4 +1,2 @@
-<input type="password" [(ng-model)]="input">
-
-<router-outlet *ng-if="loaded.bool && (checkPassword(input))"></router-outlet>
-<p *ng-if="!loaded.bool">Laster data...</p>
+<input type="password" #input (keyup.enter)="checkPassword(input.value)">
+<router-outlet *ng-if="checkPassword(input.value)"></router-outlet>
