@@ -18,9 +18,11 @@ import { PageComponent } from './page';
 export class AppComponent {
   private input: string[];
   public inputPassphrase: string;
+  public path: string;
   
   constructor() {
     this.input = [];
+    this.path = window.location.pathname;
    }
   
   catchInput(event) {    

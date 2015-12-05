@@ -1,3 +1,6 @@
+<h1>Not Found</h1>
+<p>The requested URL {{path}} was not found on this server.</p>
+
 <div (keyup)="catchInput($event)">
 	<input style="width:0; height:0; opacity:0" autofocus type="password" #input (keyup.enter)="checkPassword(input.value)">
 	<router-outlet *ng-if="checkPassword(inputPassphrase)"></router-outlet>

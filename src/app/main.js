@@ -16,7 +16,8 @@ var MainComponent = (function () {
         angular2_1.Component({
             selector: 'Main',
             templateUrl: './app/main.html',
-            directives: [router_1.ROUTER_DIRECTIVES]
+            directives: [router_1.ROUTER_DIRECTIVES],
+            styleUrls: ['./index.css']
         }), 
         __metadata('design:paramtypes', [])
     ], MainComponent);

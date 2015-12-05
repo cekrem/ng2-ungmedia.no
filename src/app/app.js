@@ -14,6 +14,7 @@ var page_1 = require('./page');
 var AppComponent = (function () {
     function AppComponent() {
         this.input = [];
+        this.path = window.location.pathname;
     }
     AppComponent.prototype.catchInput = function (event) {
         var char = String.fromCharCode(event.keyCode);

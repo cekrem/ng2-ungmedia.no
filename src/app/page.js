@@ -26,7 +26,8 @@ var PageComponent = (function () {
         angular2_1.Component({
             selector: 'Content',
             templateUrl: './app/page.html',
-            providers: [data_service_1.DataService]
+            providers: [data_service_1.DataService],
+            styleUrls: ['./index.css']
         }), 
         __metadata('design:paramtypes', [router_1.RouteParams, data_service_1.DataService])
     ], PageComponent);

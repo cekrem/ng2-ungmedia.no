@@ -5,7 +5,8 @@ import { DataService } from './data-service';
 @Component({
     selector: 'Content',
     templateUrl: './app/page.html',
-    providers: [DataService]
+    providers: [DataService],
+    styleUrls: ['./index.css']
 })
 
 export class PageComponent {
