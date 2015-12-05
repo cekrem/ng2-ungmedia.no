@@ -18,8 +18,11 @@ export class PageComponent {
         this.page = params.get('page');
 
         DataService.contentStream
-            .filter(data => data.type == 'data')
-            .subscribe(data => this.content = data.content);
+            // .filter(data => data.type == 'data')
+            .subscribe(res => {
+                if (res.type == 'data')
+                this.content = res.content;
+            });
 
         this.put = (page: string, data: string) => DataService.put(page, data);
         this.reset = () => DataService.reset();

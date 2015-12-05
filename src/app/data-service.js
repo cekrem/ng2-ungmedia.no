@@ -18,13 +18,12 @@ var DataService = (function () {
         this.backupRef = new Firebase(backupUrl);
         this.contentStream = new angular2_1.EventEmitter();
         this.contentStream
-            .filter(function (res) { return res.type == 'backup'; })
             .subscribe(function (res) {
-            console.log('backup loaded!');
-            _this.backup = res.content;
+            if (res.type == 'backup')
+                _this.backup = res.content;
         });
-        this.ref.on('value', function (snapshot) { return _this.contentStream.next({ content: snapshot.val(), type: 'data' }); });
-        this.backupRef.on('value', function (snapshot) { return _this.contentStream.next({ content: snapshot.val(), type: 'backup' }); });
+        this.ref.on('value', function (snapshot) { return _this.contentStream.emit({ content: snapshot.val(), type: 'data' }); });
+        this.backupRef.on('value', function (snapshot) { return _this.contentStream.emit({ content: snapshot.val(), type: 'backup' }); });
     }
     DataService.prototype.put = function (page, data) {
         this.ref.child(page).set(data, function () { return alert('Nytt innhold lagret!'); });

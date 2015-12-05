@@ -23,14 +23,14 @@ export class DataService {
 		this.contentStream = new EventEmitter();
 
 		this.contentStream
-			.filter(res => res.type == 'backup')
+			// .filter(res => res.type == 'backup')
 			.subscribe(res => {
-				console.log('backup loaded!');
+				if(res.type == 'backup')
 				this.backup = res.content;
 			});
 		
-		this.ref.on('value', snapshot => this.contentStream.next({ content: snapshot.val(), type: 'data'}));
-		this.backupRef.on('value', snapshot => this.contentStream.next({ content: snapshot.val(), type: 'backup'}));
+		this.ref.on('value', snapshot => this.contentStream.emit({ content: snapshot.val(), type: 'data'}));
+		this.backupRef.on('value', snapshot => this.contentStream.emit({ content: snapshot.val(), type: 'backup'}));
 	}
 
 	put(page: string, data: string) {

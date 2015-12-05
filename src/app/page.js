@@ -15,8 +15,10 @@ var PageComponent = (function () {
         var _this = this;
         this.page = params.get('page');
         DataService.contentStream
-            .filter(function (data) { return data.type == 'data'; })
-            .subscribe(function (data) { return _this.content = data.content; });
+            .subscribe(function (res) {
+            if (res.type == 'data')
+                _this.content = res.content;
+        });
         this.put = function (page, data) { return DataService.put(page, data); };
         this.reset = function () { return DataService.reset(); };
     }
