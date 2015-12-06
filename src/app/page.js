@@ -29,9 +29,10 @@ var PageComponent = (function () {
             providers: [data_service_1.DataService],
             styleUrls: ['./index.css']
         }), 
-        __metadata('design:paramtypes', [router_1.RouteParams, data_service_1.DataService])
+        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _a) || Object, data_service_1.DataService])
     ], PageComponent);
     return PageComponent;
+    var _a;
 })();
 exports.PageComponent = PageComponent;
 //# sourceMappingURL=page.js.map
